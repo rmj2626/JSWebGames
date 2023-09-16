@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="A fun flappy-bird like game">
+    <meta name="keywords" content="jumper game, flappy bird, fun game">
+    <title>My Jumper Game</title>
+    <style>
+        #canvas {
+            display: block;
+            margin: 0 auto; 
+            max-width: 600px; 
+            border: 1px solid black;
+            background-color: black;
+        }
+        #button-container {
+            text-align: center; /* Center the button horizontally */
+        }
+    </style>
+</head>
+<body style="background-color: #c3c3c3">
+    <h1 align="center" style="color:#4c6ebb">My Jumper Game</h1>
+    <p align="center">A fun flappy-bird like game.</p>
+    <canvas id="canvas" width="600" height="400">
+        Your browser does not support the HTML5 canvas tag.
+    </canvas>
+    <br><br>
+    <div id="button-container">
+        <button id="click" style="display: inline-block">Jump</button>
+    </div>
+
+    <script>
+        window.onload = function() {
+            var canvas = document.getElementById("canvas");
+            var context = canvas.getContext("2d");
+            var x = 300;
+            var y = 350;
+            var count = 0;
+            var t = Date.now();
+            var speed = 25;
+
+	document.getElementById("click").addEventListener("click", function() {
+            alert("This button is of no use.");
+        });
+
+            context.beginPath();
+            context.arc(x, y, 50, 0, 2 * Math.PI);
+            context.fillStyle = "red";
+            context.fill();
+
+            document.onkeydown = function() {
+                //for taking input on computers
+                count++;
+                y -= 25;
+                speed = 25; // Reset speed when jumping
+
+                function draw() {
+                    var timePassed = (Date.now() - t) / 1000;
+                    t = Date.now();
+
+                    if (y <= 350) {
+                        speed += 50 * timePassed;
+                        y += speed * timePassed;
+                    }
+
+                    context.clearRect(0, 0, 600, 400);
+
+                    context.beginPath();
+                    context.arc(x, y, 50, 0, 2 * Math.PI);
+                    context.fillStyle = "red";
+                    context.fill();
+
+                    context.font = "24px Impact";
+                    context.fillStyle = "white";
+                    context.fillText("Count: " + count, 20, 30);
+
+                    if (y > 350) {
+                        count = 0; // Reset the score when the ball hits the ground
+                    }
+
+                    window.requestAnimationFrame(draw);
+                }
+                draw();
+            }
+
+            document.ontouchstart = function() {
+                //for taking input on touchscreens
+                count++;
+                y -= 25;
+                speed = 25; // Reset speed when jumping
+
+                function draw() {
+                    var timePassed = (Date.now() - t) / 1000;
+                    t = Date.now();
+
+                    if (y <= 350) {
+                        speed += 50 * timePassed;
+                        y += speed * timePassed;
+                    }
+
+                    context.clearRect(0, 0, 600, 400);
+
+                    context.beginPath();
+                    context.arc(x, y, 50, 0, 2 * Math.PI);
+                    context.fillStyle = "red";
+                    context.fill();
+
+                    context.font = "24px Impact";
+                    context.fillStyle = "white";
+                    context.fillText("Count: " + count, 20, 30);
+
+                    if (y > 350) {
+                        count = 0; // Reset the score when the ball hits the ground
+                    }
+
+                    window.requestAnimationFrame(draw);
+                }
+                draw();
+            }
+        }
+    </script>
+</body>
+</html>
